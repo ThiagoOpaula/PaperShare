@@ -45,7 +45,7 @@ const SignIn: React.FC = () => {
             <ForgotPassword>
               <ForgotPasswordText>Oh no! I forgot my password</ForgotPasswordText>
             </ForgotPassword>
-            <Button onPress={() => { console.log('deu'); }}>Entrar</Button>
+            <Button onPress={() => navigation.navigate('Dashboard')}>Entrar</Button>
           </Container>
         </ScrollView>
       </KeyboardAvoidingView>
