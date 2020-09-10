@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  KeyboardAvoidingView, View, ScrollView, Platform,
-} from 'react-native';
+import { KeyboardAvoidingView, View, ScrollView, Platform } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Feather';
@@ -43,9 +41,13 @@ const SignIn: React.FC = () => {
             <Input name="email" icon="mail" placeholder="E-mail" />
             <Input name="password" icon="lock" placeholder="Senha" />
             <ForgotPassword>
-              <ForgotPasswordText>Oh no! I forgot my password</ForgotPasswordText>
+              <ForgotPasswordText>
+                Oh no! I forgot my password
+              </ForgotPasswordText>
             </ForgotPassword>
-            <Button onPress={() => navigation.navigate('Dashboard')}>Entrar</Button>
+            <Button onPress={() => navigation.navigate('Dashboard')}>
+              Entrar
+            </Button>
           </Container>
         </ScrollView>
       </KeyboardAvoidingView>

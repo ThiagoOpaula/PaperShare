@@ -2,9 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import Icon from 'react-native-vector-icons/Feather';
 
-import {
-  ModalStyle, Title, CenteredView, ModalHeader,
-} from './styles';
+import { ModalStyle, Title, CenteredView, ModalHeader } from './styles';
 
 interface IModalProps {
   isOpen: boolean;
@@ -23,18 +21,18 @@ const ModalAdd: React.FC<IModalProps> = ({ isOpen }: IModalProps) => {
 
   return (
     <CenteredView>
-      <ModalStyle
-        animationType="fade"
-        transparent
-        visible={modalVisible}
-      >
+      <ModalStyle animationType="fade" transparent visible={modalVisible}>
         <CenteredView>
           <ModalHeader>
             <Title>teste</Title>
-            <Icon name="x" size={48} color="#0099ff" onPress={() => closeModal()} />
+            <Icon
+              name="x"
+              size={48}
+              color="#0099ff"
+              onPress={() => closeModal()}
+            />
           </ModalHeader>
         </CenteredView>
-
       </ModalStyle>
     </CenteredView>
   );
