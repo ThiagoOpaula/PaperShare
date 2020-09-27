@@ -1,21 +1,62 @@
 import styled from 'styled-components/native';
+import { Picker } from '@react-native-community/picker';
+import Icon from 'react-native-vector-icons/Feather';
 
-export const ModalStyle = styled.Modal``;
+export const ModalContainer = styled.Modal``;
 
-export const CenteredView = styled.View`
+export const Container = styled.View`
   flex: 1;
-  margin: 80px 30px 60px 30px;
-  background-color: #e8e;
+  align-items: center;
+  justify-content: center;
 `;
 
-export const ModalHeader = styled.View`
+export const ModalView = styled.View`
+  flex: 1
+  border-radius: 10px;
+  margin: 10px;
+`;
+
+export const CenteredContainer = styled.View`
   flex-direction: row;
-  background-color: #e8eeae;
+  margin: 16px 0 0 16px;
 `;
 
 export const Title = styled.Text`
-  color: #4a4a4a;
-  font-family: 'Inter-ExtraBold';
-  font-size: 20px;
-  padding-left: 50px;
+  font-size: 22.5px;
+  width: 40%;
+  height: 90%;
+  color: #848287;
+`;
+
+export const Input = styled.TextInput`
+  background-color: #e0e0dc;
+  width: 50%;
+  height: 90%;
+  border-radius: 10px;
+  margin-left: 10px;
+  font-size: 21px;
+`;
+
+export const Operation = styled(Picker)`
+  background-color: #e0e0dc;
+  width: 50%;
+  height: 100%;
+  border-radius: 10px;
+  margin-left: 10px;
+`;
+
+export const DateText = styled.Text`
+  background-color: #e0e0dc;
+  width: 43%;
+  height: 80%;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  margin-left: 10px;
+`;
+
+export const IconCalendar = styled(Icon)`
+  background-color: #e0e0dc;
+  height: 80%;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
 `;

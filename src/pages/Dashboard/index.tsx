@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 
-import Icon from 'react-native-vector-icons/Feather';
+// import { View } from 'react-native';
 
-import { View } from 'react-native';
+import WalletSwipeablePanel from '../../components/WalletSwipeablePanel';
 
-import { Title, Header, Iconplus } from './styles';
+import Modal from '../../components/Modal';
+
+import { Title, Header, Iconplus, Container } from './styles';
 
 const Dashboard: React.FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -14,12 +16,22 @@ const Dashboard: React.FC = () => {
   }
 
   return (
-    <View>
-      <Header>
-        <Title>My Wallet</Title>
-        <Iconplus name="plus-circle" size={56} color="#0099ff" />
-      </Header>
-    </View>
+    <>
+      <Container>
+        <Header>
+          <Title>My Wallet</Title>
+          <Iconplus
+            name="plus-circle"
+            size={52}
+            color="#0099ff"
+            onPress={toggleModal}
+          />
+        </Header>
+      </Container>
+
+      <WalletSwipeablePanel panel="" />
+      <Modal panel={modalOpen} />
+    </>
   );
 };
 export default Dashboard;

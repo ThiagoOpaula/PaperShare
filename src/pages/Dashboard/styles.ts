@@ -1,17 +1,22 @@
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/Feather';
 
-export const Header = styled.View`
-  flex-direction: row;
-  justify-content: center;
+export const Container = styled.View`
+  flex: 1;
   align-items: center;
-  padding-top: 10px;
-  padding-left: 50px;
-  width: 80%;
+`;
+
+export const Header = styled.View`
+  width: 82.5%;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 25px;
+  margin-top: 16px;
 `;
 
 export const Title = styled.Text`
-  font-size: 38px;
+  font-size: 34px;
   font-family: 'Inter-ExtraBold';
 `;
 
