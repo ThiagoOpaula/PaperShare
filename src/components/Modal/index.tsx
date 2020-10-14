@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Platform, KeyboardAvoidingView } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { format } from 'date-fns';
 
 import {
   Container,
@@ -9,23 +10,25 @@ import {
   CenteredContainer,
   Title,
   Input,
-  Operation,
+  PickerOperation,
   DateText,
   IconCalendar,
 } from './styles';
 
 interface panelProps {
-  panel: boolean;
+  isOpen: boolean;
+  setIsOpen: () => void;
 }
 
-const Modal: React.FC<panelProps> = ({ panel }: panelProps) => {
-  const [modalVisible, setModalVisible] = useState(true);
-  const [selectedDate, setSelectedDate] = useState(new Date());
-  const [show, setShow] = useState(false);
+const Modal: React.FC<panelProps> = ({ isOpen, setIsOpen }: panelProps) => {
+  const [modalVisible, setModalVisible] = useState(isOpen);
+  // const [selectedDate, setSelectedDate] = useState(new Date());
+  // const [formatedDate, setFormatedDate] = useState('');
+  // const [show, setShow] = useState(false);
 
   useEffect(() => {
-    setModalVisible(!modalVisible);
-  }, [panel]);
+    setModalVisible(isOpen);
+  }, [isOpen]);
 
   const handleToggleDatePicker = () => {
     setShow(!show);
@@ -38,8 +41,8 @@ const Modal: React.FC<panelProps> = ({ panel }: panelProps) => {
       }
       if (date) {
         setSelectedDate(date);
+        setFormatedDate(format(date, 'dd/MM/yyyy'));
       }
-      console.log(date);
     },
     [],
   );
@@ -49,11 +52,12 @@ const Modal: React.FC<panelProps> = ({ panel }: panelProps) => {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <ModalContainer
-        animationType="fade"
+        animationType="slide"
         hardwareAccelerated
+        transparent
         visible={modalVisible}
         onRequestClose={() => {
-          setModalVisible(!modalVisible);
+          setIsOpen();
         }}
       >
         <Container>
@@ -61,9 +65,7 @@ const Modal: React.FC<panelProps> = ({ panel }: panelProps) => {
             <CenteredContainer>
               <Title>Data</Title>
               <DateText onPress={handleToggleDatePicker}>
-                {selectedDate.getDate()}
-                {selectedDate.getMonth() + 1}
-                {selectedDate.getFullYear()}
+                {formatedDate}
               </DateText>
               <IconCalendar
                 name="calendar"
@@ -71,30 +73,19 @@ const Modal: React.FC<panelProps> = ({ panel }: panelProps) => {
                 color="#0099ff"
                 onPress={handleToggleDatePicker}
               />
-
-              {show && (
-                <DateTimePicker
-                  testID="dateTimePicker"
-                  value={selectedDate}
-                  mode="date"
-                  is24Hour
-                  display="spinner"
-                  onChange={handleDateChanged}
-                />
-              )}
             </CenteredContainer>
 
             <CenteredContainer>
               <Title>Papel</Title>
-              <Input onFocus={handleToggleDatePicker} />
+              <Input />
             </CenteredContainer>
 
             <CenteredContainer>
               <Title>operação</Title>
-              <Operation style={{ borderRadius: 10 }}>
-                <Operation.Item label="Java" value="java" />
-                <Operation.Item label="JavaScript" value="js" />
-              </Operation>
+              <PickerOperation>
+                <PickerOperation.Item label="Java" value="java" />
+                <PickerOperation.Item label="JavaScript" value="js" />
+              </PickerOperation>
             </CenteredContainer>
 
             <CenteredContainer>
@@ -114,6 +105,15 @@ const Modal: React.FC<panelProps> = ({ panel }: panelProps) => {
           </ModalView>
         </Container>
       </ModalContainer>
+      {show && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={selectedDate}
+          mode="date"
+          display="spinner"
+          onChange={handleDateChanged}
+        />
+      )}
     </KeyboardAvoidingView>
   );
 };

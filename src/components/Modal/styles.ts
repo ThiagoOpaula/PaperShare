@@ -2,8 +2,6 @@ import styled from 'styled-components/native';
 import { Picker } from '@react-native-community/picker';
 import Icon from 'react-native-vector-icons/Feather';
 
-export const ModalContainer = styled.Modal``;
-
 export const Container = styled.View`
   flex: 1;
   align-items: center;
@@ -11,14 +9,16 @@ export const Container = styled.View`
 `;
 
 export const ModalView = styled.View`
-  flex: 1
   border-radius: 10px;
-  margin: 10px;
+  margin-top: 12%;
+  background-color: green;
+  height: 80%;
 `;
 
 export const CenteredContainer = styled.View`
   flex-direction: row;
-  margin: 16px 0 0 16px;
+  margin: 24px 0 0 16px;
+  align-items: center;
 `;
 
 export const Title = styled.Text`
@@ -26,6 +26,7 @@ export const Title = styled.Text`
   width: 40%;
   height: 90%;
   color: #848287;
+  justify-content: center;
 `;
 
 export const Input = styled.TextInput`
@@ -37,7 +38,7 @@ export const Input = styled.TextInput`
   font-size: 21px;
 `;
 
-export const Operation = styled(Picker)`
+export const PickerOperation = styled.Picker`
   background-color: #e0e0dc;
   width: 50%;
   height: 100%;
