@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import { RectButton } from 'react-native-gesture-handler';
 
 export const Container = styled.View`
-  margin-top: 16%;
+  margin-top: 20%;
   align-items: center;
   justify-content: center;
 `;
@@ -12,7 +12,6 @@ export const Container = styled.View`
 export const CenteredContainer = styled.View`
   flex-direction: row;
   width: 80%;
-  margin-top: 36px;
   align-items: center;
   justify-content: space-between;
 `;
@@ -45,7 +44,7 @@ export const InputView = styled.View`
 export const PickerOperation = styled(Picker)`
   margin-left: 10px;
   height: 40px;
-  width: 150px;
+  width: 90%;
 `;
 
 export const OperationViewer = styled.View`
@@ -54,6 +53,7 @@ export const OperationViewer = styled.View`
   height: 44px;
   align-items: center;
   background-color: #e0e0dc;
+  margin-bottom: 10px;
   border-radius: 10px;
 `;
 
@@ -65,6 +65,7 @@ export const CalendarViewer = styled.View`
   border-radius: 10px;
   align-items: center;
   justify-content: center;
+  margin-bottom: 10px;
 `;
 
 export const DateText = styled.Text`
@@ -82,7 +83,7 @@ export const IconCalendar = styled(Icon)`
 
 export const ButtonView = styled.View`
   flex-direction: row;
-  margin-top: 88px;
+  margin-top: 60px;
   align-items: center;
   width: 80%;
   height: 8.5%;
@@ -110,4 +111,14 @@ export const AddButton = styled(RectButton)`
 export const ButtonText = styled.Text`
   font-family: 'Inter-Medium';
   color: #ffffff;
+`;
+
+export const AlertView = styled.View`
+  height: 2%;
+  margin: 0px 0px 5% 40%;
+`;
+
+export const AlertText = styled.Text`
+  font-family: 'Inter-Medium';
+  color: red;
 `;

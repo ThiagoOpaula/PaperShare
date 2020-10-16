@@ -23,14 +23,20 @@ import {
   AddButton,
   CancelButton,
   ButtonText,
+  AlertView,
+  AlertText,
 } from './styles';
+
+interface Operation {
+  operation: number | string;
+}
 
 const Operation: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [formatedDate, setFormatedDate] = useState('');
   const [show, setShow] = useState(false);
-  const [state, setState] = useState({
-    language: 'java',
+  const [state, setState] = useState<Operation>({
+    operation: 1,
   });
 
   const navigation = useNavigation();
@@ -56,40 +62,37 @@ const Operation: React.FC = () => {
     [],
   );
 
-  // const handleOperation = useCallback((data: object) => {
-  //   console.log(data);
-  // }, []);
-
-  const handlePickerChanger = (itemValue: string | number) => {
-    setState({ language: itemValue.toString() });
-  };
-
   const SignupSchema = yup.object().shape({
-    paper: yup
-      .string()
-      .min(2, 'Too Short!')
-      .max(50, 'Too Long!')
-      .required('Required'),
-    quantity: yup
-      .string()
-      .min(2, 'Too Short!')
-      .max(50, 'Too Long!')
-      .required('Required'),
-    price: yup
-      .string()
-      .min(2, 'Too Short!')
-      .max(50, 'Too Long!')
-      .required('Required'),
-    charge: yup.number().max(10, 'Too Long!').required('Required'),
+    date: yup.date().max(new Date(), 'insira uma data valida').required(),
+    paper: yup.string().max(50, 'Too Long!').required('campo obrigatório'),
+    operation: yup.number().min(1).required('campo obrigatório'),
+    quantity: yup.number().max(50, 'Too Long!').required('campo obrigatório'),
+    price: yup.number().required('campo obrigatório'),
+    charge: yup.number().required('campo obrigatório'),
   });
 
   return (
     <Formik
-      initialValues={{ paper: '', quantity: '', price: '', charge: '' }}
+      initialValues={{
+        date: new Date(),
+        paper: '',
+        operation: state.operation,
+        quantity: '',
+        price: '',
+        charge: '',
+      }}
       validationSchema={SignupSchema}
       onSubmit={values => console.log(values)}
     >
-      {({ handleChange, handleBlur, handleSubmit, values }) => (
+      {({
+        handleChange,
+        handleBlur,
+        handleSubmit,
+        values,
+        errors,
+        touched,
+        setFieldValue,
+      }) => (
         <Container>
           <CenteredContainer>
             <Title>Data</Title>
@@ -104,7 +107,26 @@ const Operation: React.FC = () => {
                 onPress={handleToggleDatePicker}
               />
             </CalendarViewer>
+            {show && (
+              <DateTimePicker
+                testID="dateTimePicker"
+                value={selectedDate}
+                mode="date"
+                display="spinner"
+                onChange={(date, event) => {
+                  if (date) {
+                    handleDateChanged(date, event);
+                    setFieldValue('date', selectedDate);
+                  }
+                }}
+              />
+            )}
           </CenteredContainer>
+          <AlertView>
+            {errors.date && touched.date ? (
+              <AlertText>{errors.date}</AlertText>
+            ) : null}
+          </AlertView>
 
           <CenteredContainer>
             <Title>Papel</Title>
@@ -117,20 +139,31 @@ const Operation: React.FC = () => {
               />
             </InputView>
           </CenteredContainer>
-
+          <AlertView>
+            {errors.paper && touched.paper ? (
+              <AlertText>{errors.paper}</AlertText>
+            ) : null}
+          </AlertView>
           <CenteredContainer>
             <Title>operação</Title>
             <OperationViewer>
               <PickerOperation
-                selectedValue={state.language}
-                onValueChange={handlePickerChanger}
+                selectedValue={state.operation}
+                onValueChange={itemValue => {
+                  setState({ operation: itemValue });
+                  setFieldValue('operation', itemValue);
+                }}
               >
-                <Picker.Item label="Compra" value="compra" />
-                <Picker.Item label="Venda" value="venda" />
+                <Picker.Item label="Compra" value={1} />
+                <Picker.Item label="Venda" value={2} />
               </PickerOperation>
             </OperationViewer>
           </CenteredContainer>
-
+          <AlertView>
+            {errors.operation && touched.operation ? (
+              <AlertText>{errors.operation}</AlertText>
+            ) : null}
+          </AlertView>
           <CenteredContainer>
             <Title>quantidade</Title>
             <InputView>
@@ -143,7 +176,11 @@ const Operation: React.FC = () => {
               />
             </InputView>
           </CenteredContainer>
-
+          <AlertView>
+            {errors.quantity && touched.quantity ? (
+              <AlertText>{errors.quantity}</AlertText>
+            ) : null}
+          </AlertView>
           <CenteredContainer>
             <Title>preço</Title>
             <InputView>
@@ -156,7 +193,11 @@ const Operation: React.FC = () => {
               />
             </InputView>
           </CenteredContainer>
-
+          <AlertView>
+            {errors.price && touched.price ? (
+              <AlertText>{errors.price}</AlertText>
+            ) : null}
+          </AlertView>
           <CenteredContainer>
             <Title>custo</Title>
             <InputView>
@@ -169,7 +210,11 @@ const Operation: React.FC = () => {
               />
             </InputView>
           </CenteredContainer>
-
+          <AlertView>
+            {errors.charge && touched.charge ? (
+              <AlertText>{errors.charge}</AlertText>
+            ) : null}
+          </AlertView>
           <ButtonView>
             <CancelButton onPress={() => navigation.navigate('Dashboard')}>
               <ButtonText>Cancelar</ButtonText>
@@ -178,16 +223,6 @@ const Operation: React.FC = () => {
               <ButtonText>Salvar Operação</ButtonText>
             </AddButton>
           </ButtonView>
-
-          {show && (
-            <DateTimePicker
-              testID="dateTimePicker"
-              value={selectedDate}
-              mode="date"
-              display="spinner"
-              onChange={handleDateChanged}
-            />
-          )}
         </Container>
       )}
     </Formik>
