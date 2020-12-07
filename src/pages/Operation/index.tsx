@@ -1,12 +1,13 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { Platform } from 'react-native';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { TextInput } from 'react-native';
 // import { KeyboardAvoidingView, View } from 'react-native';
-import DateTimePicker from '@react-native-community/datetimepicker';
 import { format } from 'date-fns';
 import { Picker } from '@react-native-community/picker';
 import { useNavigation } from '@react-navigation/native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
+import OperationInput from '../../components/OperationInput';
+import Datetime from '../../components/DateTime';
 
 import {
   Container,
@@ -34,7 +35,7 @@ interface Operation {
 const Operation: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [formatedDate, setFormatedDate] = useState('');
-  const [show, setShow] = useState(false);
+  const [calendarOpen, setCalendarOpen] = useState(false);
   const [state, setState] = useState<Operation>({
     operation: 1,
   });
@@ -45,22 +46,13 @@ const Operation: React.FC = () => {
     setFormatedDate(format(selectedDate, 'dd/MM/yyyy'));
   }, [selectedDate]);
 
-  const handleToggleDatePicker = () => {
-    setShow(!show);
+  const handleToggleDatePicker = (): void => {
+    setCalendarOpen(!calendarOpen);
   };
 
-  const handleDateChanged = useCallback(
-    (event: any, date: Date | undefined) => {
-      if (Platform.OS === 'android') {
-        setShow(false);
-      }
-      if (date) {
-        setSelectedDate(date);
-        setFormatedDate(format(date, 'dd/MM/yyyy'));
-      }
-    },
-    [],
-  );
+  const pickedDate = (date: Date) => {
+    setSelectedDate(date);
+  };
 
   const SignupSchema = yup.object().shape({
     date: yup.date().max(new Date(), 'insira uma data valida').required(),
@@ -103,41 +95,26 @@ const Operation: React.FC = () => {
               <IconCalendar
                 name="calendar"
                 size={32}
-                color="#0099ff"
+                color={errors.date ? 'red' : '#0099ff'}
                 onPress={handleToggleDatePicker}
               />
             </CalendarViewer>
-            {show && (
-              <DateTimePicker
-                testID="dateTimePicker"
-                value={selectedDate}
-                mode="date"
-                display="spinner"
-                onChange={(date, event) => {
-                  if (date) {
-                    handleDateChanged(date, event);
-                    setFieldValue('date', selectedDate);
-                  }
-                }}
-              />
-            )}
           </CenteredContainer>
           <AlertView>
-            {errors.date && touched.date ? (
-              <AlertText>{errors.date}</AlertText>
-            ) : null}
+            {errors.date ? <AlertText>{errors.date}</AlertText> : null}
           </AlertView>
 
           <CenteredContainer>
             <Title>Papel</Title>
-            <InputView>
-              <Input
-                placeholder="OER6"
-                onChangeText={handleChange('paper')}
-                onBlur={handleBlur('paper')}
-                value={values.paper}
-              />
-            </InputView>
+
+            <OperationInput
+              placeholder="OER6"
+              autoCorrect={false}
+              autoCapitalize="none"
+              onChangeText={handleChange('paper')}
+              onBlur={handleBlur('paper')}
+              value={values.paper}
+            />
           </CenteredContainer>
           <AlertView>
             {errors.paper && touched.paper ? (
@@ -166,15 +143,15 @@ const Operation: React.FC = () => {
           </AlertView>
           <CenteredContainer>
             <Title>quantidade</Title>
-            <InputView>
-              <Input
-                placeholder="10"
-                keyboardType="numeric"
-                onChangeText={handleChange('quantity')}
-                onBlur={handleBlur('quantity')}
-                value={values.quantity}
-              />
-            </InputView>
+
+            <OperationInput
+              placeholder="10"
+              keyboardType="numeric"
+              onChangeText={handleChange('quantity')}
+              onBlur={handleBlur('quantity')}
+              value={values.quantity}
+              returnKeyType="next"
+            />
           </CenteredContainer>
           <AlertView>
             {errors.quantity && touched.quantity ? (
@@ -183,15 +160,14 @@ const Operation: React.FC = () => {
           </AlertView>
           <CenteredContainer>
             <Title>preço</Title>
-            <InputView>
-              <Input
-                placeholder="0.00R$"
-                keyboardType="numeric"
-                onChangeText={handleChange('price')}
-                onBlur={handleBlur('price')}
-                value={values.price}
-              />
-            </InputView>
+
+            <OperationInput
+              placeholder="0.00R$"
+              keyboardType="numeric"
+              onChangeText={handleChange('price')}
+              onBlur={handleBlur('price')}
+              value={values.price}
+            />
           </CenteredContainer>
           <AlertView>
             {errors.price && touched.price ? (
@@ -200,15 +176,15 @@ const Operation: React.FC = () => {
           </AlertView>
           <CenteredContainer>
             <Title>custo</Title>
-            <InputView>
-              <Input
-                placeholder="0.00R$"
-                keyboardType="numeric"
-                onChangeText={handleChange('charge')}
-                onBlur={handleBlur('charge')}
-                value={values.charge}
-              />
-            </InputView>
+            <OperationInput
+              placeholder="0.00R$"
+              keyboardType="numeric"
+              onChangeText={handleChange('charge')}
+              onBlur={handleBlur('charge')}
+              value={values.charge}
+              returnKeyType="send"
+              onSubmitEditing={handleSubmit}
+            />
           </CenteredContainer>
           <AlertView>
             {errors.charge && touched.charge ? (
@@ -219,10 +195,18 @@ const Operation: React.FC = () => {
             <CancelButton onPress={() => navigation.navigate('Dashboard')}>
               <ButtonText>Cancelar</ButtonText>
             </CancelButton>
-            <AddButton onPress={handleSubmit} title="Submit">
+            <AddButton onPress={() => handleSubmit()}>
               <ButtonText>Salvar Operação</ButtonText>
             </AddButton>
           </ButtonView>
+          {calendarOpen && (
+            <Datetime
+              setIsOpen={handleToggleDatePicker}
+              setFormValue={setFieldValue}
+              picked={pickedDate}
+              selectedDate={selectedDate}
+            />
+          )}
         </Container>
       )}
     </Formik>
