@@ -19,7 +19,12 @@ const OperationInput: React.FC<TextInputProps> = ({
 
   return (
     <Container isFocused={isFocused}>
-      <Input {...rest} onFocus={handleInputFocus} />
+      <Input
+        {...rest}
+        onFocus={handleInputFocus}
+        onBlur={handleInputBlur}
+        isErrored={!!error}
+      />
     </Container>
   );
 };

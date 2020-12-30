@@ -59,6 +59,8 @@ export const OperationViewer = styled.View`
   background-color: #e0e0dc;
   margin-bottom: 10px;
   border-radius: 10px;
+  border-width: 1.5px;
+  border-color: #232129;
 `;
 
 export const CalendarViewer = styled.View`
@@ -70,6 +72,8 @@ export const CalendarViewer = styled.View`
   align-items: center;
   justify-content: center;
   margin-bottom: 10px;
+  border-width: 1.5px;
+  border-color: #0099ff;
 `;
 
 export const DateText = styled.Text`
