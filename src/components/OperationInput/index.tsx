@@ -8,6 +8,7 @@ const OperationInput: React.FC<TextInputProps> = ({
 }: TextInputProps) => {
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
+  const [error, setError] = useState(false);
 
   const handleInputFocus = useCallback(() => {
     setIsFocused(true);
@@ -18,13 +19,8 @@ const OperationInput: React.FC<TextInputProps> = ({
   }, []);
 
   return (
-    <Container isFocused={isFocused}>
-      <Input
-        {...rest}
-        onFocus={handleInputFocus}
-        onBlur={handleInputBlur}
-        isErrored={!!error}
-      />
+    <Container isFocused={isFocused} isErrored={error}>
+      <Input {...rest} onFocus={handleInputFocus} onBlur={handleInputBlur} />
     </Container>
   );
 };

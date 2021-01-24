@@ -19,6 +19,12 @@ export const Container = styled.View<ContainerProps>`
   align-items: center;
 
   ${props =>
+    props.isErrored &&
+    css`
+      border-color: #ed1717;
+    `}
+
+  ${props =>
     props.isFocused &&
     css`
       border-color: #0099ff;

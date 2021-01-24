@@ -58,7 +58,10 @@ const Operation: React.FC = () => {
     date: yup.date().max(new Date(), 'insira uma data valida').required(),
     paper: yup.string().max(50, 'Too Long!').required('campo obrigatório'),
     operation: yup.number().min(1).required('campo obrigatório'),
-    quantity: yup.number().max(50, 'Too Long!').required('campo obrigatório'),
+    quantity: yup
+      .number()
+      .max(10000, 'Too Long!')
+      .required('campo obrigatório'),
     price: yup.number().required('campo obrigatório'),
     charge: yup.number().required('campo obrigatório'),
   });
@@ -112,8 +115,8 @@ const Operation: React.FC = () => {
               autoCorrect={false}
               autoCapitalize="none"
               onChangeText={handleChange('paper')}
-              onBlur={handleBlur('paper')}
               value={values.paper}
+              isErrored={!!errors.paper}
             />
           </CenteredContainer>
           <AlertView>
@@ -148,7 +151,6 @@ const Operation: React.FC = () => {
               placeholder="10"
               keyboardType="numeric"
               onChangeText={handleChange('quantity')}
-              onBlur={handleBlur('quantity')}
               value={values.quantity}
               returnKeyType="next"
             />
@@ -180,7 +182,6 @@ const Operation: React.FC = () => {
               placeholder="0.00R$"
               keyboardType="numeric"
               onChangeText={handleChange('charge')}
-              onBlur={handleBlur('charge')}
               value={values.charge}
               returnKeyType="send"
               onSubmitEditing={handleSubmit}
