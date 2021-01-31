@@ -116,7 +116,7 @@ const Operation: React.FC = () => {
               autoCapitalize="none"
               onChangeText={handleChange('paper')}
               value={values.paper}
-              isErrored={!!errors.paper}
+              isWrong={!!errors.paper}
             />
           </CenteredContainer>
           <AlertView>
