@@ -3,21 +3,11 @@ import { TextInputProps } from 'react-native';
 
 import { Container, Input } from './styles';
 
-interface OperationProps {
-  isWrong: boolean;
-}
-
-const OperationInput: React.FC<TextInputProps & OperationProps> = (
-  { ...rest }: TextInputProps,
-  { isWrong }: OperationProps,
-) => {
+const OperationInput: React.FC<TextInputProps> = ({
+  ...rest
+}: TextInputProps) => {
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
-  const [isErrored, setIsErrored] = useState(false);
-
-  useCallback(() => {
-    console.log(isWrong);
-  }, [isWrong]);
 
   const handleInputFocus = useCallback(() => {
     setIsFocused(true);
@@ -28,7 +18,7 @@ const OperationInput: React.FC<TextInputProps & OperationProps> = (
   }, []);
 
   return (
-    <Container isFocused={isFocused} isErrored={isErrored}>
+    <Container isFocused={isFocused}>
       <Input {...rest} onFocus={handleInputFocus} onBlur={handleInputBlur} />
     </Container>
   );
