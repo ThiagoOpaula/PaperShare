@@ -2,20 +2,28 @@ import React, { useState } from 'react';
 
 import { useNavigation } from '@react-navigation/native';
 
-// import { View } from 'react-native';
+import Repository from '../../components/Action';
 
-// import WalletSwipeablePanel from '../../components/WalletSwipeablePanel';
+import operationModel from '../../models/Operation';
 
-import Modal from '../../components/Modal';
+import OperationRepository from '../../repositories/OperationRepository';
 
-import { Title, Header, Iconplus, Container } from './styles';
+import { Title, Header, Iconplus, Container, List } from './styles';
 
 const Dashboard: React.FC = () => {
+  const [clientList, setClientList] = useState<Realm.Results<operationModel>>();
   // const [modalOpen, setModalOpen] = useState(false);
 
   // function toggleModal(): void {
   //   setModalOpen(!modalOpen);
   // }
+
+  const clientRepository = new OperationRepository();
+
+  const loadClients = async () => {
+    const data = await clientRepository.GetAll(nameValue);
+    setClientList(data);
+  };
 
   const navigation = useNavigation();
 
@@ -31,6 +39,17 @@ const Dashboard: React.FC = () => {
             onPress={() => navigation.navigate('Operation')}
           />
         </Header>
+        <List
+          keyboardShouldPersistTaps="handled"
+          data={[
+            {
+              paper: 'ort5',
+              operation: 1,
+            },
+          ]}
+          keyExtractor={item => String(item.id)}
+          renderItem={({ item }) => <Repository data={item} />}
+        />
       </Container>
     </>
   );

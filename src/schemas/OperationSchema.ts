@@ -6,7 +6,7 @@ export default class OperationSchema {
       paper: { type: 'string', indexed: true },
       date: 'date',
       operation: { type: 'int', indexed: true },
-      Quantity: 'int',
+      quantity: 'int',
       price: 'float',
       charge: 'float',
     },

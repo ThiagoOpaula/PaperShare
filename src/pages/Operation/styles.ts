@@ -1,11 +1,7 @@
-import styled, { css } from 'styled-components/native';
+import styled from 'styled-components/native';
 import { Picker } from '@react-native-community/picker';
 import Icon from 'react-native-vector-icons/Feather';
 import { RectButton } from 'react-native-gesture-handler';
-
-interface errorsProps {
-  errors: boolean;
-}
 
 export const Container = styled.View`
   margin-top: 20%;

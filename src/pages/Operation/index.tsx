@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { TextInput } from 'react-native';
+import React, { useState, useEffect } from 'react';
 // import { KeyboardAvoidingView, View } from 'react-native';
 import { format } from 'date-fns';
 import { Picker } from '@react-native-community/picker';
@@ -8,13 +7,13 @@ import { Formik } from 'formik';
 import * as yup from 'yup';
 import OperationInput from '../../components/OperationInput';
 import Datetime from '../../components/DateTime';
+import OperationModel from '../../models/Operation';
+import OperationRepository from '../../repositories/OperationRepository';
 
 import {
   Container,
   CenteredContainer,
   Title,
-  Input,
-  InputView,
   DateText,
   IconCalendar,
   PickerOperation,
@@ -39,6 +38,7 @@ const Operation: React.FC = () => {
   const [state, setState] = useState<Operation>({
     operation: 1,
   });
+  const clientRepository = new OperationRepository();
 
   const navigation = useNavigation();
 
@@ -66,6 +66,23 @@ const Operation: React.FC = () => {
     charge: yup.number().required('campo obrigatório'),
   });
 
+  async function handleAddOperation(values: any) {
+    console.log(values);
+    const action = new OperationModel();
+    action.paper = values.paper;
+    action.date = values.date;
+    action.operation = values.operation;
+    action.quantity = values.quantity;
+    action.price = values.price;
+    action.charge = values.charge;
+    try {
+      await clientRepository.SaveClient(action, true);
+      console.log('salvou');
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   return (
     <Formik
       initialValues={{
@@ -77,7 +94,9 @@ const Operation: React.FC = () => {
         charge: '',
       }}
       validationSchema={SignupSchema}
-      onSubmit={values => console.log(values)}
+      onSubmit={values => {
+        handleAddOperation(values);
+      }}
     >
       {({
         handleChange,
@@ -116,7 +135,6 @@ const Operation: React.FC = () => {
               autoCapitalize="none"
               onChangeText={handleChange('paper')}
               value={values.paper}
-              isWrong={!!errors.paper}
             />
           </CenteredContainer>
           <AlertView>
@@ -156,7 +174,7 @@ const Operation: React.FC = () => {
             />
           </CenteredContainer>
           <AlertView>
-            {errors.quantity && touched.quantity ? (
+            {errors.quantity || touched.quantity ? (
               <AlertText>{errors.quantity}</AlertText>
             ) : null}
           </AlertView>

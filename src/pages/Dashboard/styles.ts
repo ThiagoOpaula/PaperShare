@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+
 import Icon from 'react-native-vector-icons/Feather';
 
 export const Container = styled.View`
@@ -21,3 +22,10 @@ export const Title = styled.Text`
 `;
 
 export const Iconplus = styled(Icon)``;
+
+export const List = styled.FlatList.attrs({
+  contentContainerStyle: { paddingHorizontal: 20 },
+  showsVerticalScrollIndicator: false,
+})`
+  margin-top: 20px;
+`;
