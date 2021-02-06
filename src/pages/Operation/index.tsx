@@ -76,7 +76,7 @@ const Operation: React.FC = () => {
     action.price = values.price;
     action.charge = values.charge;
     try {
-      await clientRepository.SaveClient(action, true);
+      await clientRepository.SaveClient(action);
       console.log('salvou');
     } catch (err) {
       console.log(err);

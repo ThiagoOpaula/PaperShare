@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { useNavigation } from '@react-navigation/native';
 
-import Repository from '../../components/Action';
+import Action from '../../components/Action';
 
 import operationModel from '../../models/Operation';
 
@@ -12,7 +12,7 @@ import { Title, Header, Iconplus, Container, List } from './styles';
 
 const Dashboard: React.FC = () => {
   const [clientList, setClientList] = useState<Realm.Results<operationModel>>();
-  // const [modalOpen, setModalOpen] = useState(false);
+  const [Actions, setActions] = useState([]);
 
   // function toggleModal(): void {
   //   setModalOpen(!modalOpen);
@@ -21,9 +21,14 @@ const Dashboard: React.FC = () => {
   const clientRepository = new OperationRepository();
 
   const loadClients = async () => {
-    const data = await clientRepository.GetAll(nameValue);
-    setClientList(data);
+    const data = await clientRepository.GetAll();
+    console.log('teste', data);
+    setActions(data);
   };
+
+  useEffect(() => {
+    loadClients();
+  }, []);
 
   const navigation = useNavigation();
 
@@ -41,14 +46,9 @@ const Dashboard: React.FC = () => {
         </Header>
         <List
           keyboardShouldPersistTaps="handled"
-          data={[
-            {
-              paper: 'ort5',
-              operation: 1,
-            },
-          ]}
+          data={Actions}
           keyExtractor={item => String(item.id)}
-          renderItem={({ item }) => <Repository data={item} />}
+          renderItem={({ item }) => <Action data={item} />}
         />
       </Container>
     </>
