@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "87602376314",
+    "project_id": "papershare-9a8e7",
+    "storage_bucket": "papershare-9a8e7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:87602376314:android:cc838d086b24237307d5c3",
+        "android_client_info": {
+          "package_name": "com.papershare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "87602376314-bntbsj3vo5et22d1hrj44bru60c19mv1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.papershare",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "87602376314-g9p592mvgnqia9o9f2ot7622l7fpm61u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmh9y1xHdMVGUKjQVCOb6rnE49Hj9nl8k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "87602376314-g9p592mvgnqia9o9f2ot7622l7fpm61u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

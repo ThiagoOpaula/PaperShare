@@ -1,4 +1,6 @@
 export default class operationModel {
+  id: string;
+
   paper: string;
 
   date: Date;
@@ -12,6 +14,7 @@ export default class operationModel {
   charge: number;
 
   constructor() {
+    this.id = '';
     this.paper = '';
     this.date = new Date();
     this.operation = 0;

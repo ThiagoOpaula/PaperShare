@@ -1,8 +1,15 @@
 import React from 'react';
-import { KeyboardAvoidingView, View, ScrollView, Platform } from 'react-native';
+import {
+  KeyboardAvoidingView,
+  View,
+  ScrollView,
+  Platform,
+  ToastAndroid,
+} from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Feather';
+import auth from '@react-native-firebase/auth';
 
 import Input from '../../components/Input';
 import Button from '../../components/Button';
@@ -21,6 +28,22 @@ import {
 
 const SignIn: React.FC = () => {
   const navigation = useNavigation();
+
+  const SingIn = () => {
+    auth()
+      .signInWithEmailAndPassword('thiago-oliveira2001@live.com', '123456789')
+      .then(() => {
+        console.log('User account created & signed in!');
+        ToastAndroid.show('Login realizado', ToastAndroid.SHORT);
+        navigation.navigate('Dashboard');
+      })
+      .catch(error => {
+        if (error.code === 'auth/wrong-password') {
+          console.log('That email address is already in use!');
+          ToastAndroid.show('Senha invalida', ToastAndroid.SHORT);
+        }
+      });
+  };
 
   return (
     <>
@@ -45,9 +68,7 @@ const SignIn: React.FC = () => {
                 Oh no! I forgot my password
               </ForgotPasswordText>
             </ForgotPassword>
-            <Button onPress={() => navigation.navigate('Dashboard')}>
-              Entrar
-            </Button>
+            <Button onPress={() => SingIn()}>Entrar</Button>
           </Container>
         </ScrollView>
       </KeyboardAvoidingView>
