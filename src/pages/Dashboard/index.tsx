@@ -12,7 +12,7 @@ import { Title, Header, Iconplus, Container, List } from './styles';
 
 const Dashboard: React.FC = () => {
   const [clientList, setClientList] = useState<Realm.Results<operationModel>>();
-  const [Actions, setActions] = useState([]);
+  const [Actions, setActions] = useState<Realm.Results<operationModel>>();
 
   // function toggleModal(): void {
   //   setModalOpen(!modalOpen);

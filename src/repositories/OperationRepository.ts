@@ -20,8 +20,9 @@ export default class OperationRepository {
       realm.write(() => {
         realm.create('Operation', action);
       });
-    } catch {
-      return false;
+    } catch (error) {
+      console.log('erro ao salvar');
+      console.log(error);
     }
 
     return true;

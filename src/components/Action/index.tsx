@@ -5,7 +5,7 @@ import { Container, Paper, Price, Date } from './styles';
 interface dataInfo {
   paper: string;
   price: number;
-  date: string;
+  date: Date;
 }
 
 const Action: React.FC<dataInfo> = (data: dataInfo) => {

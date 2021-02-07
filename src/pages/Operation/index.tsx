@@ -68,13 +68,14 @@ const Operation: React.FC = () => {
 
   async function handleAddOperation(values: any) {
     console.log(values);
+    console.log(values.quantity, 'teste');
     const action = new OperationModel();
     action.paper = values.paper;
     action.date = values.date;
     action.operation = values.operation;
-    action.quantity = values.quantity;
-    action.price = values.price;
-    action.charge = values.charge;
+    action.quantity = Number(values.quantity);
+    action.price = Number(values.price);
+    action.charge = Number(values.charge);
     try {
       await clientRepository.SaveClient(action);
       console.log('salvou');
