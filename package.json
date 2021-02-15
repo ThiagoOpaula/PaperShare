@@ -20,6 +20,7 @@
     "@types/date-fns": "^2.6.0",
     "date-fns": "^2.16.1",
     "formik": "^2.2.6",
+    "node-fetch": "^2.6.1",
     "react": "17.0.1",
     "react-native": "0.63.4",
     "react-native-gesture-handler": "^1.9.0",
